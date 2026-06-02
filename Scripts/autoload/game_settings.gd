@@ -28,6 +28,7 @@ var p1_control_mode: int = 0
 var p2_control_mode: int = 2
 var p1_gamepad_aim_mode: int = 0
 var p2_gamepad_aim_mode: int = 0
+var tutorial_completed: bool = false
 
 var _values: Dictionary = {}
 
@@ -81,6 +82,17 @@ func get_gamepad_aim_mode(player_index: int) -> int:
 	return clampi(p2_gamepad_aim_mode, 0, 1)
 
 
+func has_completed_tutorial() -> bool:
+	return tutorial_completed
+
+
+func mark_tutorial_completed() -> void:
+	if tutorial_completed:
+		return
+	tutorial_completed = true
+	save_settings()
+
+
 func set_gamepad_aim_mode(player_index: int, mode: int) -> void:
 	var clamped: int = clampi(mode, 0, 1)
 	if player_index <= 0:
@@ -117,6 +129,7 @@ func load_settings() -> void:
 		p2_control_mode = int(config.get_value("controls", "p2_control_mode", 2))
 		p1_gamepad_aim_mode = int(config.get_value("controls", "p1_gamepad_aim_mode", 0))
 		p2_gamepad_aim_mode = int(config.get_value("controls", "p2_gamepad_aim_mode", 0))
+		tutorial_completed = bool(config.get_value("meta", "tutorial_completed", false))
 	_sync_values_to_properties()
 
 
@@ -135,6 +148,7 @@ func save_settings() -> void:
 	config.set_value("controls", "p2_control_mode", p2_control_mode)
 	config.set_value("controls", "p1_gamepad_aim_mode", p1_gamepad_aim_mode)
 	config.set_value("controls", "p2_gamepad_aim_mode", p2_gamepad_aim_mode)
+	config.set_value("meta", "tutorial_completed", tutorial_completed)
 	var err: Error = config.save(SETTINGS_PATH)
 	if err != OK:
 		push_warning("[GameSettings] No se pudo guardar ajustes: %s" % error_string(err))

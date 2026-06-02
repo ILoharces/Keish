@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://Scripts/core/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://Scenes/ui/game_views_panel.tscn" id="2_game_views"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" path="res://Scenes/ui/play_menu.tscn" id="8_play_menu"]
 [ext_resource type="PackedScene" path="res://Scenes/ui/escape_menu.tscn" id="9_escape_menu"]
 [ext_resource type="PackedScene" path="res://Scenes/ui/settings_menu.tscn" id="10_settings_menu"]
+[ext_resource type="PackedScene" path="res://Scenes/ui/tutorial_overlay.tscn" id="11_tutorial"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -60,5 +61,7 @@ offset_bottom = 1080.0
 [node name="EscapeMenu" parent="." instance=ExtResource("9_escape_menu")]
 
 [node name="SettingsMenu" parent="." instance=ExtResource("10_settings_menu")]
+
+[node name="TutorialOverlay" parent="." instance=ExtResource("11_tutorial")]
 
 [node name="MainMenu" parent="." instance=ExtResource("7_main_menu")]

@@ -13,6 +13,7 @@ class_name Main
 @onready var map_editor: MapEditor = $MapEditor
 @onready var escape_menu: EscapeMenu = $EscapeMenu
 @onready var settings_menu: SettingsMenu = $SettingsMenu
+@onready var tutorial_overlay: TutorialOverlay = $TutorialOverlay
 
 var _game_started: bool = false
 var _was_running_before_pause: bool = false
@@ -49,6 +50,16 @@ func _ready() -> void:
 	_screens.connect_menus()
 	if not InputBindings.control_modes_changed.is_connected(_on_control_modes_changed):
 		InputBindings.control_modes_changed.connect(_on_control_modes_changed)
+	if not GameSettings.has_completed_tutorial():
+		main_menu.visible = false
+		if not tutorial_overlay.finished.is_connected(_on_tutorial_finished):
+			tutorial_overlay.finished.connect(_on_tutorial_finished, CONNECT_ONE_SHOT)
+		tutorial_overlay.show_tutorial()
+	else:
+		main_menu.show_menu()
+
+
+func _on_tutorial_finished() -> void:
 	main_menu.show_menu()
 
 
