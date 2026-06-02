@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Scripts/combat/weapon_data.gd" id="1_weapon_data"]
+[ext_resource type="Script" path="res://Scripts/combat/orbital_strike_effect.gd" id="2_orbital_effect"]
+
+[resource]
+script = ExtResource("1_weapon_data")
+weapon_id = &"orbital_cannon"
+display_name = "Canon orbital"
+hold_color = Color(0.298039, 0.686275, 0.85098, 1)
+aim_profile = 3
+delivery = 2
+damage = 999.0
+stun_duration = 0.0
+cooldown = 0.0
+uses_ammo = true
+pickup_ammo = 1
+auto_fire = false
+orbital_strike = true
+telegraph_time = 0.5
+max_range = 0.0
+requires_same_room = false
+blocks_when_same_room = false
+projectile_speed = 0.0
+knockback_force = 0.0
+aoe_radius = 0.0
+custom_effect = ExtResource("2_orbital_effect")

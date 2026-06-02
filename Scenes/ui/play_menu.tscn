@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/ui/play_menu.gd" id="1_play_menu"]
+
+[node name="PlayMenu" type="CanvasLayer"]
+layer = 25
+script = ExtResource("1_play_menu")
+
+[node name="Center" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+custom_minimum_size = Vector2(480, 400)
+
+[node name="VBox" type="VBoxContainer" parent="Center/Panel"]
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Center/Panel/VBox"]
+theme_override_font_sizes/font_size = 26
+text = "Elegir mapa"
+horizontal_alignment = 1
+
+[node name="HintLabel" type="Label" parent="Center/Panel/VBox"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 13
+text = "Lista de mapas (work in progress)"
+horizontal_alignment = 1
+autowrap_mode = 3
+modulate = Color(0.75, 0.75, 0.75, 1)
+
+[node name="AiCheckbox" type="CheckBox" parent="Center/Panel/VBox"]
+unique_name_in_owner = true
+button_pressed = true
+text = "Jugar contra IA"
+
+[node name="MapList" type="ItemList" parent="Center/Panel/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 260)
+size_flags_vertical = 3
+focus_mode = 2
+select_mode = 0
+allow_reselect = true
+
+[node name="Actions" type="HBoxContainer" parent="Center/Panel/VBox"]
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="BackButton" type="Button" parent="Center/Panel/VBox/Actions"]
+unique_name_in_owner = true
+text = "Volver"
+custom_minimum_size = Vector2(140, 40)
+
+[node name="PlayButton" type="Button" parent="Center/Panel/VBox/Actions"]
+unique_name_in_owner = true
+text = "Jugar"
+custom_minimum_size = Vector2(140, 40)

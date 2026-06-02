@@ -1,0 +1,50 @@
+---
+description: Armas, combate PvP, apuntado, espías, input y modos de control en Kage. Cargar skill kage-game-systems.
+globs: Scripts/combat/**,Scripts/actors/**,Scripts/autoload/input_bindings.gd,Scripts/autoload/game_settings.gd,Scripts/autoload/weapon_db.gd,Scripts/autoload/game_state.gd,Scripts/ui/aim_cursor*.gd,Scripts/ui/game_views_panel.gd,Scripts/ui/controls_settings_panel.gd,Scripts/core/main.gd,resources/weapons/**
+alwaysApply: false
+---
+
+# Kage: armas y controles
+
+Al editar estos archivos, **lee y sigue** la skill del proyecto: `.cursor/skills/kage-game-systems/SKILL.md`.
+
+## GDScript (recordatorio)
+
+- Godot 4, tipos explícitos, `@onready`, `.connect()`, `randf_range()`.
+
+## No hacer sin pedirlo explícito
+
+- Remapeo de teclas en UI ni `user://input_bindings.cfg`
+- Teclado+mando simultáneo en `InputMap` para el mismo jugador
+- Colores de mirilla según validez del disparo (blanco/negro + rojo fijos)
+- Apuntar convirtiendo el cursor a mundo con la cámara de la vista bajo el ratón (dirección visual)
+- Usar `_unhandled_input` en `Player`/`Player2` para disparo o acciones de combate con ratón
+- Rediseñar el espía (monigotes, sombreros, detalles de color) sin pedirlo; mantener **cuerpo rect + cabeza circular** blanco/negro
+
+## Espías (visual, hitbox, animación)
+
+- **Visual**: placeholder en `SpyVisual` — rectángulo + círculo; escala con profundidad (`Room.get_depth_at_local`).
+- **Hitbox**: `SpyVisual.compute_metrics()` → `SpyBase.update_body_collider()` cada frame; `contains_hit_point()` para hitscan y orbital (no radio fijo desde `global_position`).
+- **Caminar**: wiggle ligero solo al moverse — rotación izq./der. pivotando en los pies (`_get_walk_transform()`); en reposo = `Transform2D.IDENTITY` (nunca desplazar el dibujo en idle).
+- **Cañón**: `get_muzzle_local_offset()` / `get_grip_local_offset()` deben usar la **misma geometría y transform de caminar** que el dibujo del arma (`_weapon_point_local`).
+
+## Armas
+
+- Nueva arma = `.tres` en `resources/weapons/` + spawn en `MansionBuilder` (o mapa)
+- Lógica nueva solo si `delivery` o `WeaponEffect` no existen
+- PvP con mirilla en ambas vistas: preferir `ANY_VIEW`; `LOCAL_VIEW`/`REMOTE_VIEW` solo si la mecánica lo exige
+
+## Controles
+
+- Bindings en `InputBindings._build_default_bindings()`; modos en `GameSettings` / panel Controles
+- P2 apuntado con teclado: no habilitado hasta definir teclas
+- **Disparo**: polling con `Input.is_action_just_pressed()` en `_process` (`_get_fire_action()`); los espías viven en `SubViewport` y no reciben eventos de ratón por `_unhandled_input`
+
+## Combate / mirilla
+
+- **Dirección de apuntado**: `AimResolver.resolve_aim_direction()` — de boca de cañón a posición de mirilla en pantalla (cámara del atacante)
+- **Posición de mirilla**: `GameViewsPanel.clamp_to_aim_views()` sobre la unión de `PlayerView` + `AiView`; disparo y dibujo usan esa posición, no el ratón crudo fuera de las ventanas
+- **Modo órbita (mando)**: pivote en `get_muzzle_world_position()`; radio `ORBIT_SCREEN_RADIUS` (128 px)
+- **Origen de proyectiles**: `SpyBase.get_muzzle_world_position()` — debe coincidir con la punta visual del cañón
+- Snap al equipar: `Main._snap_aim_to_room_center` + `weapon_changed` / `held_changed`
+- Re-equipar misma arma debe emitir `weapon_changed` (`equip_weapon_in_hands`, `set_equipped_weapon`)

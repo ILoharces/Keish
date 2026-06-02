@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/combat/weapon_data.gd" id="1_weapon_data"]
+
+[resource]
+script = ExtResource("1_weapon_data")
+weapon_id = &"machine_gun"
+display_name = "Metralleta"
+hold_color = Color(0.262745, 0.317647, 0.2, 1)
+aim_profile = 3
+delivery = 1
+damage = 28.0
+stun_duration = 0.0
+cooldown = 0.1
+uses_ammo = true
+pickup_ammo = 15
+auto_fire = true
+telegraph_time = 0.0
+max_range = 0.0
+requires_same_room = false
+blocks_when_same_room = false
+projectile_speed = 620.0
+knockback_force = 180.0
+aoe_radius = 0.0

@@ -1,0 +1,5 @@
+Siempre que escribas código para este proyecto, debes usar estrictamente GDScript de Godot 4.
+- Usa la palabra clave '@onready' en lugar de 'onready'.
+- Usa los nuevos nombres de señales (ej. 'body_entered.connect(_on_body_entered)').
+- No uses la función 'rand_range()', usa 'randf_range()'.
+- Los tipos de datos deben ser explícitos siempre que sea posible (static typing).

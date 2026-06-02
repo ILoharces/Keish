@@ -1,0 +1,64 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://Scripts/core/main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://Scenes/ui/game_views_panel.tscn" id="2_game_views"]
+[ext_resource type="PackedScene" path="res://Scenes/ui/hud.tscn" id="3_hud"]
+[ext_resource type="PackedScene" path="res://Scenes/ui/trapulator.tscn" id="4_trap"]
+[ext_resource type="PackedScene" path="res://Scenes/ui/game_over.tscn" id="5_go"]
+[ext_resource type="PackedScene" path="res://Scenes/ui/map_editor.tscn" id="6_map_editor"]
+[ext_resource type="PackedScene" path="res://Scenes/ui/main_menu.tscn" id="7_main_menu"]
+[ext_resource type="PackedScene" path="res://Scenes/ui/play_menu.tscn" id="8_play_menu"]
+[ext_resource type="PackedScene" path="res://Scenes/ui/escape_menu.tscn" id="9_escape_menu"]
+[ext_resource type="PackedScene" path="res://Scenes/ui/settings_menu.tscn" id="10_settings_menu"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_main")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="GameRoot" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="GameViewsPanel" parent="GameRoot" instance=ExtResource("2_game_views")]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 0.0
+offset_right = 855.0
+offset_bottom = 1080.0
+
+[node name="Hud" parent="GameRoot" instance=ExtResource("3_hud")]
+
+[node name="Trapulator" parent="GameRoot" instance=ExtResource("4_trap")]
+
+[node name="GameOver" parent="." instance=ExtResource("5_go")]
+
+[node name="MapEditor" parent="." instance=ExtResource("6_map_editor")]
+
+[node name="PlayMenu" parent="." instance=ExtResource("8_play_menu")]
+
+[node name="EscapeMenu" parent="." instance=ExtResource("9_escape_menu")]
+
+[node name="SettingsMenu" parent="." instance=ExtResource("10_settings_menu")]
+
+[node name="MainMenu" parent="." instance=ExtResource("7_main_menu")]

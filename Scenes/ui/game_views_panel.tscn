@@ -1,0 +1,65 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Scripts/ui/game_views_panel.gd" id="1_panel"]
+[ext_resource type="PackedScene" path="res://Scenes/world/mansion.tscn" id="2_mansion"]
+
+[node name="GameViewsPanel" type="Control"]
+layout_mode = 1
+anchors_preset = 0
+offset_right = 839.0
+offset_bottom = 1072.0
+mouse_filter = 2
+script = ExtResource("1_panel")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="PlayerView" type="SubViewportContainer" parent="VBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+mouse_filter = 2
+
+[node name="PlayerViewport" type="SubViewport" parent="VBox/PlayerView"]
+size = Vector2i(831, 536)
+render_target_update_mode = 4
+
+[node name="Mansion" parent="VBox/PlayerView/PlayerViewport" instance=ExtResource("2_mansion")]
+
+[node name="AiView" type="SubViewportContainer" parent="VBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+mouse_filter = 2
+
+[node name="AiViewport" type="SubViewport" parent="VBox/AiView"]
+handle_input_locally = false
+gui_disable_input = true
+size = Vector2i(831, 536)
+render_target_update_mode = 4
+
+[node name="PlayerLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 100.0
+offset_bottom = 30.0
+mouse_filter = 2
+text = "BLANCO"
+
+[node name="AiLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 546.0
+offset_right = 100.0
+offset_bottom = 566.0
+mouse_filter = 2
+text = "NEGRO"

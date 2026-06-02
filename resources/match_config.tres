@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MatchConfig" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/core/match_config.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+match_duration = 300.0
+starting_traps_per_kind = 1
+traps_infinite = true
+starting_counters_per_kind = 0
+respawn_base_duration = 2.0
+respawn_streak_increment = 2.0

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/ui/trapulator.gd" id="1_trap"]
+
+[node name="Trapulator" type="CanvasLayer"]
+script = ExtResource("1_trap")
