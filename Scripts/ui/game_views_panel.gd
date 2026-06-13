@@ -344,9 +344,9 @@ func _on_respawn_finished(spy_id: int) -> void:
 
 
 func _view_for_spy(spy_id: int) -> SubViewportContainer:
-	if spy_id == ItemDB.SpyId.PLAYER:
+	if spy_id == ItemDB.SpyId.PLAYER1:
 		return player_view
-	if spy_id == ItemDB.SpyId.AI:
+	if spy_id == ItemDB.SpyId.PLAYER2:
 		return ai_view
 	return null
 

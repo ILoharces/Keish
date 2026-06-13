@@ -129,13 +129,13 @@ func setup_combat_aim() -> void:
 	var p1_uses_mouse: bool = (
 		InputBindings.get_control_mode(0) == InputBindings.PlayerControlMode.KEYBOARD_MOUSE
 	)
-	var p1_controller: AimController = AimController.new(ItemDB.SpyId.PLAYER, p1_uses_mouse)
+	var p1_controller: AimController = AimController.new(ItemDB.SpyId.PLAYER1, p1_uses_mouse)
 	p1_controller.initialize_at(game_views.get_player_view_global_rect().get_center())
-	_aim_controllers[ItemDB.SpyId.PLAYER] = p1_controller
+	_aim_controllers[ItemDB.SpyId.PLAYER1] = p1_controller
 	if bottom_spy != null and bottom_spy != mansion.player:
-		var p2_controller: AimController = AimController.new(ItemDB.SpyId.AI, false)
+		var p2_controller: AimController = AimController.new(ItemDB.SpyId.PLAYER2, false)
 		p2_controller.initialize_at(game_views.get_ai_view_global_rect().get_center())
-		_aim_controllers[ItemDB.SpyId.AI] = p2_controller
+		_aim_controllers[ItemDB.SpyId.PLAYER2] = p2_controller
 	_aim_cursor.setup(_aim_controllers, _aim_resolver)
 	_orbital_laser = OrbitalLaserOverlay.new()
 	game_root.add_child(_orbital_laser)
@@ -179,7 +179,7 @@ func restore_orbital_aim_mode_for_spy(spy: SpyBase) -> void:
 	var controller: AimController = get_aim_controller(controller_key)
 	if controller == null:
 		return
-	var player_index: int = 0 if spy.spy_id == ItemDB.SpyId.PLAYER else 1
+	var player_index: int = 0 if spy.spy_id == ItemDB.SpyId.PLAYER1 else 1
 	controller.sync_aim_mode_from_settings(player_index)
 
 
@@ -222,8 +222,8 @@ func _disconnect_aim_snap_signals() -> void:
 
 func _aim_controller_key_for_spy(spy: SpyBase) -> int:
 	if mansion != null and spy == mansion.player:
-		return ItemDB.SpyId.PLAYER
-	return ItemDB.SpyId.AI
+		return ItemDB.SpyId.PLAYER1
+	return ItemDB.SpyId.PLAYER2
 
 
 func _on_spy_weapon_changed(weapon_id: StringName, spy: SpyBase, controller_key: int) -> void:
@@ -235,7 +235,7 @@ func _on_spy_weapon_changed(weapon_id: StringName, spy: SpyBase, controller_key:
 func snap_orbital_aim(controller_key: int) -> void:
 	var controller: AimController = _aim_controllers.get(controller_key) as AimController
 	if controller != null:
-		var player_index: int = 0 if controller_key == ItemDB.SpyId.PLAYER else 1
+		var player_index: int = 0 if controller_key == ItemDB.SpyId.PLAYER1 else 1
 		if InputBindings.get_control_mode(player_index) == InputBindings.PlayerControlMode.GAMEPAD:
 			controller.enter_orbital_virtual_cursor()
 
@@ -264,10 +264,10 @@ func _snap_aim_cursors_to_spy_centers(move_os_cursor: bool = false) -> void:
 	if _aim_resolver == null or mansion == null:
 		return
 	if mansion.player != null:
-		_snap_aim_to_spy_center(mansion.player, ItemDB.SpyId.PLAYER, move_os_cursor)
+		_snap_aim_to_spy_center(mansion.player, ItemDB.SpyId.PLAYER1, move_os_cursor)
 	var bottom_spy: SpyBase = mansion.get_bottom_spy()
 	if bottom_spy != null and bottom_spy != mansion.player:
-		_snap_aim_to_spy_center(bottom_spy, ItemDB.SpyId.AI, move_os_cursor)
+		_snap_aim_to_spy_center(bottom_spy, ItemDB.SpyId.PLAYER2, move_os_cursor)
 
 
 func _snap_aim_to_room_center(spy: SpyBase, controller_key: int) -> void:
@@ -286,7 +286,7 @@ func _snap_aim_to_room_center(spy: SpyBase, controller_key: int) -> void:
 	if screen_pos == Vector2.ZERO:
 		var view_rect: Rect2 = (
 			game_views.get_player_view_global_rect()
-			if controller_key == ItemDB.SpyId.PLAYER
+			if controller_key == ItemDB.SpyId.PLAYER1
 			else game_views.get_ai_view_global_rect()
 		)
 		if view_rect.size == Vector2.ZERO:

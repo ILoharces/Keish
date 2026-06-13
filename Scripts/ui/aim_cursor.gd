@@ -13,10 +13,10 @@ var _aim_controllers: Dictionary = {}
 func _ready() -> void:
 	layer = 15
 	_player_dot = AimCursorDot.new()
-	_player_dot.base_color = ItemDB.SPY_COLORS[ItemDB.SpyId.PLAYER] as Color
+	_player_dot.base_color = ItemDB.SPY_COLORS[ItemDB.SpyId.PLAYER1] as Color
 	_player_dot.detail_color = COLOR_DETAIL
 	_bottom_dot = AimCursorDot.new()
-	_bottom_dot.base_color = ItemDB.SPY_COLORS[ItemDB.SpyId.AI] as Color
+	_bottom_dot.base_color = ItemDB.SPY_COLORS[ItemDB.SpyId.PLAYER2] as Color
 	_bottom_dot.detail_color = COLOR_DETAIL
 	_player_orbital = OrbitalTargetRing.new()
 	_bottom_orbital = OrbitalTargetRing.new()
@@ -34,10 +34,10 @@ func _process(_delta: float) -> void:
 	var main: Main = _find_main()
 	if main == null or main.mansion == null:
 		return
-	_update_cursor(_player_dot, _player_orbital, main.mansion.player, ItemDB.SpyId.PLAYER, main)
+	_update_cursor(_player_dot, _player_orbital, main.mansion.player, ItemDB.SpyId.PLAYER1, main)
 	var bottom_spy: SpyBase = main.mansion.get_bottom_spy()
 	if bottom_spy != null:
-		_update_cursor(_bottom_dot, _bottom_orbital, bottom_spy, ItemDB.SpyId.AI, main)
+		_update_cursor(_bottom_dot, _bottom_orbital, bottom_spy, ItemDB.SpyId.PLAYER2, main)
 
 
 func _update_cursor(

@@ -14,8 +14,8 @@
 | Orquestación | `Scripts/core/main.gd` (`setup_combat_aim`, `_snap_aim_to_room_center`) |
 | Input | `Scripts/autoload/input_bindings.gd`, `game_settings.gd` |
 | UI controles | `Scripts/ui/controls_settings_panel.gd` |
-| Actores | `spy_base.gd`, `spy_visual.gd`, `spy_movement.gd`, `player.gd`, `player2.gd` |
-| P2 aim id | P2 usa `get_aim_controller_spy_id()` → `ItemDB.SpyId.AI` (aunque el nodo sea `Player2`) |
+| Actores | `spy_base.gd`, `spy_visual.gd`, `spy_movement.gd`, `player1.gd`, `player2.gd` |
+| P2 aim id | P2 usa `get_aim_controller_spy_id()` → `ItemDB.SpyId.PLAYER2` (aunque el nodo sea `Player2`) |
 
 ## Espías (`SpyBase` + componentes)
 
@@ -190,7 +190,7 @@ Player._process → Input.is_action_just_pressed(_get_fire_action())
 ## Anti-patrones
 
 - Registrar teclado y mando a la vez para el mismo jugador en `InputMap`
-- Usar `spy_id` del nodo para clave de `AimController` en P2 (usar `ItemDB.SpyId.AI`)
+- Usar `spy_id` del nodo para clave de `AimController` en P2 (usar `ItemDB.SpyId.PLAYER2`)
 - Cambiar color de mirilla según `validate_for_weapon` (decisión de diseño actual)
 - Añadir remapeo en `ControlsSettingsPanel` sin rediseñar asignación de mandos
 - Calcular `aim_direction` con `resolve().world_pos - global_position` (usa vista bajo cursor, no mirilla en pantalla)

@@ -94,11 +94,11 @@ func _build_end_copy(winner_id: int) -> Dictionary:
 
 
 func _legacy_end_copy(winner_id: int) -> Dictionary:
-	if winner_id == ItemDB.SpyId.PLAYER:
+	if winner_id == ItemDB.SpyId.PLAYER1:
 		if GameState.use_ai:
 			return {"title": "VICTORIA", "subtitle": "Has ganado la partida"}
 		return {"title": "BLANCO GANA", "subtitle": ""}
-	if winner_id == ItemDB.SpyId.AI:
+	if winner_id == ItemDB.SpyId.PLAYER2:
 		if GameState.use_ai:
 			return {"title": "DERROTA", "subtitle": "Has perdido la partida"}
 		return {"title": "NEGRO GANA", "subtitle": ""}
@@ -106,18 +106,18 @@ func _legacy_end_copy(winner_id: int) -> Dictionary:
 
 
 func _spy_label(spy_id: int) -> String:
-	if spy_id == ItemDB.SpyId.PLAYER:
+	if spy_id == ItemDB.SpyId.PLAYER1:
 		return "BLANCO"
-	if spy_id == ItemDB.SpyId.AI:
+	if spy_id == ItemDB.SpyId.PLAYER2:
 		return "NEGRO" if not GameState.use_ai else "IA"
 	return "???"
 
 
 func _loser_id(winner_id: int) -> int:
-	if winner_id == ItemDB.SpyId.PLAYER:
-		return ItemDB.SpyId.AI
-	if winner_id == ItemDB.SpyId.AI:
-		return ItemDB.SpyId.PLAYER
+	if winner_id == ItemDB.SpyId.PLAYER1:
+		return ItemDB.SpyId.PLAYER2
+	if winner_id == ItemDB.SpyId.PLAYER2:
+		return ItemDB.SpyId.PLAYER1
 	return GameState.WINNER_NONE
 
 

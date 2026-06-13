@@ -12,10 +12,10 @@ static func handle_gamepad_action(grid: MapEditorGrid, gp: Vector2i, edge_dir: V
 			_handle_exit_action(grid, gp, edge_dir)
 		MapEditorGrid.PlaceMode.BUILD:
 			_handle_build_action(grid, gp, edge_dir)
-		MapEditorGrid.PlaceMode.PLAYER:
+		MapEditorGrid.PlaceMode.PLAYER1:
 			if grid.has_room(gp):
 				grid.set_player_spawn(gp)
-		MapEditorGrid.PlaceMode.AI:
+		MapEditorGrid.PlaceMode.PLAYER2:
 			if grid.has_room(gp):
 				grid.set_ai_spawn(gp)
 
@@ -41,10 +41,10 @@ static func handle_click(grid: MapEditorGrid, local_pos: Vector2) -> void:
 		return
 	var gp: Vector2i = Vector2i(col, row)
 	match grid.place_mode:
-		MapEditorGrid.PlaceMode.PLAYER:
+		MapEditorGrid.PlaceMode.PLAYER1:
 			if grid.has_room(gp):
 				grid.set_player_spawn(gp)
-		MapEditorGrid.PlaceMode.AI:
+		MapEditorGrid.PlaceMode.PLAYER2:
 			if grid.has_room(gp):
 				grid.set_ai_spawn(gp)
 		_:

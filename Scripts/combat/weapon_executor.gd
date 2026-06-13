@@ -139,7 +139,7 @@ func _get_opponent(attacker: SpyBase) -> SpyBase:
 		node = node.get_parent()
 	if mansion == null:
 		return null
-	if attacker.spy_id == ItemDB.SpyId.PLAYER:
+	if attacker.spy_id == ItemDB.SpyId.PLAYER1:
 		return mansion.get_bottom_spy()
 	return mansion.player
 

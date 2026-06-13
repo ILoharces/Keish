@@ -26,8 +26,8 @@ func _ready() -> void:
 	GameState.suitcase_dropped.connect(_on_suitcase_state_changed)
 	GameState.suitcase_recovered.connect(_on_suitcase_recovered)
 	GameState.suitcase_stolen.connect(_on_suitcase_stolen)
-	_on_time_changed(ItemDB.SpyId.PLAYER, GameState.get_time_left(ItemDB.SpyId.PLAYER))
-	_on_time_changed(ItemDB.SpyId.AI, GameState.get_time_left(ItemDB.SpyId.AI))
+	_on_time_changed(ItemDB.SpyId.PLAYER1, GameState.get_time_left(ItemDB.SpyId.PLAYER1))
+	_on_time_changed(ItemDB.SpyId.PLAYER2, GameState.get_time_left(ItemDB.SpyId.PLAYER2))
 	player_panel.update_inventory()
 	ai_panel.update_inventory()
 	relayout_for_display()
@@ -87,12 +87,12 @@ func bind_world(mansion: Mansion) -> void:
 func _build_ui() -> void:
 	player_panel = SpyHudPanel.new()
 	player_panel.name = "PlayerStats"
-	player_panel.setup(ItemDB.SpyId.PLAYER, true)
+	player_panel.setup(ItemDB.SpyId.PLAYER1, true)
 	player_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(player_panel)
 	ai_panel = SpyHudPanel.new()
 	ai_panel.name = "AiStats"
-	ai_panel.setup(ItemDB.SpyId.AI, false)
+	ai_panel.setup(ItemDB.SpyId.PLAYER2, false)
 	ai_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(ai_panel)
 	message_label = Label.new()
@@ -125,21 +125,21 @@ func _on_time_changed(spy_id: int, value: float) -> void:
 	var minutes: int = int(clamped) / 60
 	var seconds: int = int(clamped) % 60
 	var text: String = "%02d:%02d" % [minutes, seconds]
-	if spy_id == ItemDB.SpyId.PLAYER:
+	if spy_id == ItemDB.SpyId.PLAYER1:
 		player_panel.set_time_text(text, NesUiTheme.timer_color(clamped))
-	elif spy_id == ItemDB.SpyId.AI:
+	elif spy_id == ItemDB.SpyId.PLAYER2:
 		ai_panel.set_time_text(text, NesUiTheme.timer_color(clamped))
 
 
 func _on_inventory_changed(spy_id: int) -> void:
-	if spy_id == ItemDB.SpyId.PLAYER:
+	if spy_id == ItemDB.SpyId.PLAYER1:
 		player_panel.update_inventory()
 	else:
 		ai_panel.update_inventory()
 
 
 func _on_weapons_changed(spy_id: int) -> void:
-	if spy_id == ItemDB.SpyId.PLAYER:
+	if spy_id == ItemDB.SpyId.PLAYER1:
 		player_panel.update_ammo(bound_player, _get_equipped_weapon_id(bound_player))
 	else:
 		ai_panel.update_ammo(bound_opponent, _get_equipped_weapon_id(bound_opponent))
@@ -182,40 +182,40 @@ func _build_flash_copy(winner_id: int) -> Dictionary:
 			return {"message": "ELIMINADO!"}
 		GameState.MatchEndReason.TIMEOUT:
 			return {"message": "TIME UP!"}
-	if winner_id == ItemDB.SpyId.PLAYER:
+	if winner_id == ItemDB.SpyId.PLAYER1:
 		return {"message": "YOU WIN!" if GameState.use_ai else "BLANCO WINS!"}
-	if winner_id == ItemDB.SpyId.AI:
+	if winner_id == ItemDB.SpyId.PLAYER2:
 		return {"message": "YOU LOSE!" if GameState.use_ai else "NEGRO WINS!"}
 	return {"message": "GAME OVER"}
 
 
 func _spy_flash_label(spy_id: int) -> String:
-	if spy_id == ItemDB.SpyId.PLAYER:
+	if spy_id == ItemDB.SpyId.PLAYER1:
 		return "BLANCO" if not GameState.use_ai else "YOU"
-	if spy_id == ItemDB.SpyId.AI:
+	if spy_id == ItemDB.SpyId.PLAYER2:
 		return "NEGRO" if not GameState.use_ai else "BLACK SPY"
 	return "???"
 
 
 func _on_exit_reached(spy_id: int) -> void:
-	if spy_id == ItemDB.SpyId.PLAYER:
+	if spy_id == ItemDB.SpyId.PLAYER1:
 		flash_message("Need all 5 items to escape")
 
 
 func _on_item_blocked(spy_id: int) -> void:
-	if spy_id == ItemDB.SpyId.PLAYER:
+	if spy_id == ItemDB.SpyId.PLAYER1:
 		flash_message("Need suitcase first")
 
 
 func _on_suitcase_state_changed(spy_id: int) -> void:
 	_on_inventory_changed(spy_id)
-	if spy_id == ItemDB.SpyId.PLAYER:
+	if spy_id == ItemDB.SpyId.PLAYER1:
 		flash_message("Suelta lo que llevabas — recoge con E")
 
 
 func _on_suitcase_recovered(spy_id: int) -> void:
 	_on_inventory_changed(spy_id)
-	if spy_id == ItemDB.SpyId.PLAYER:
+	if spy_id == ItemDB.SpyId.PLAYER1:
 		player_panel.blink_inventory()
 		flash_message("Maletin recuperado — todo el botin a salvo")
 
@@ -223,9 +223,9 @@ func _on_suitcase_recovered(spy_id: int) -> void:
 func _on_suitcase_stolen(thief_id: int, victim_id: int) -> void:
 	_on_inventory_changed(thief_id)
 	_on_inventory_changed(victim_id)
-	if thief_id == ItemDB.SpyId.PLAYER:
+	if thief_id == ItemDB.SpyId.PLAYER1:
 		flash_message("Has robado el maletin enemigo")
-	elif victim_id == ItemDB.SpyId.PLAYER:
+	elif victim_id == ItemDB.SpyId.PLAYER1:
 		flash_message("Te han robado el maletin")
 
 

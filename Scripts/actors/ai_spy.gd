@@ -22,7 +22,7 @@ var place_trap_cooldown: float = 0.0
 
 
 func _ready() -> void:
-	spy_id = ItemDB.SpyId.AI
+	spy_id = ItemDB.SpyId.PLAYER2
 	super._ready()
 	add_to_group("ai_spy")
 	search_finished.connect(_on_search_finished)

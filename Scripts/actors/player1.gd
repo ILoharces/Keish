@@ -7,8 +7,8 @@ var input_blocked: bool = false
 
 
 func _ready() -> void:
-	if spy_id != ItemDB.SpyId.AI:
-		spy_id = ItemDB.SpyId.PLAYER
+	if spy_id != ItemDB.SpyId.PLAYER2:
+		spy_id = ItemDB.SpyId.PLAYER1
 	super._ready()
 	add_to_group("player")
 

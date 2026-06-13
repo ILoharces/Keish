@@ -15,8 +15,8 @@ enum PendingAction { NONE, PLAY, SAVE }
 const MODES: Array[MapEditorGrid.PlaceMode] = [
 	MapEditorGrid.PlaceMode.BUILD,
 	MapEditorGrid.PlaceMode.EXIT,
-	MapEditorGrid.PlaceMode.PLAYER,
-	MapEditorGrid.PlaceMode.AI,
+	MapEditorGrid.PlaceMode.PLAYER1,
+	MapEditorGrid.PlaceMode.PLAYER2,
 ]
 
 const MODE_LABELS: Array[String] = ["Habitaciones", "Salida", "Jugador 1", "Jugador 2"]
@@ -373,8 +373,8 @@ func _sync_mode_buttons() -> void:
 	var mode: MapEditorGrid.PlaceMode = MODES[_mode_index]
 	_build_button.set_pressed_no_signal(mode == MapEditorGrid.PlaceMode.BUILD)
 	_exit_button.set_pressed_no_signal(mode == MapEditorGrid.PlaceMode.EXIT)
-	_player_button.set_pressed_no_signal(mode == MapEditorGrid.PlaceMode.PLAYER)
-	_ai_button.set_pressed_no_signal(mode == MapEditorGrid.PlaceMode.AI)
+	_player_button.set_pressed_no_signal(mode == MapEditorGrid.PlaceMode.PLAYER1)
+	_ai_button.set_pressed_no_signal(mode == MapEditorGrid.PlaceMode.PLAYER2)
 	for button: Button in [_build_button, _exit_button, _player_button, _ai_button]:
 		NesUiTheme.refresh_toggle_button(button)
 
@@ -399,14 +399,14 @@ func _on_exit_mode_toggled(pressed: bool) -> void:
 
 func _on_player_mode_toggled(pressed: bool) -> void:
 	if pressed:
-		_set_mode_index(MODES.find(MapEditorGrid.PlaceMode.PLAYER))
+		_set_mode_index(MODES.find(MapEditorGrid.PlaceMode.PLAYER1))
 	else:
 		_set_mode_index(0)
 
 
 func _on_ai_mode_toggled(pressed: bool) -> void:
 	if pressed:
-		_set_mode_index(MODES.find(MapEditorGrid.PlaceMode.AI))
+		_set_mode_index(MODES.find(MapEditorGrid.PlaceMode.PLAYER2))
 	else:
 		_set_mode_index(0)
 

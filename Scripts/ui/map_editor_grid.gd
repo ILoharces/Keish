@@ -3,7 +3,7 @@ class_name MapEditorGrid
 
 # Rejilla del editor: habitaciones, puertas compartidas, puerta de salida y marcadores de spawn.
 
-enum PlaceMode { BUILD, EXIT, PLAYER, AI }
+enum PlaceMode { BUILD, EXIT, PLAYER1, PLAYER2 }
 
 signal room_toggled(cell: Vector2i, has_room: bool)
 signal door_toggled(cell: Vector2i, direction: String, has_door: bool)

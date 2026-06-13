@@ -3,11 +3,11 @@ extends Node
 # Base de datos estática del juego: items, trampas, contramedidas y muebles.
 # Se accede como singleton (autoload ItemDB).
 
-enum ItemId { SUITCASE, KEY, MONEY, PASSPORT, MICROFILM }
-enum TrapId { BOMB, SPRING, WATER_BUCKET, GUN_STRING, TIMED_BOMB }
-enum CounterId { WIRE_CUTTERS, WRENCH, UMBRELLA, TONGS, GAS_MASK }
+enum ItemId { SUITCASE, KEY, MONEY, PASSPORT}
+enum TrapId { BOMB}
+enum CounterId { WIRE_CUTTERS }
 enum FurnitureKind { PAINTING, BOOKSHELF, ARMCHAIR, DRAWERS, PLANT, LAMP, CLOCK, TABLE, WEAPON_BOX }
-enum SpyId { PLAYER, AI }
+enum SpyId { PLAYER1, PLAYER2 }
 
 const ITEM_COUNT: int = 5
 const TRAP_COUNT: int = 5
@@ -20,10 +20,6 @@ const TIMED_BOMB_FUSE: float = 5.0
 # Cada trampa se neutraliza con una contramedida concreta segun la guia clasica.
 const TRAP_TO_COUNTER: Dictionary = {
 	TrapId.BOMB: CounterId.WIRE_CUTTERS,
-	TrapId.SPRING: CounterId.WRENCH,
-	TrapId.WATER_BUCKET: CounterId.UMBRELLA,
-	TrapId.GUN_STRING: CounterId.TONGS,
-	TrapId.TIMED_BOMB: CounterId.GAS_MASK,
 }
 
 # Colores placeholder para todos los elementos visuales
@@ -32,7 +28,6 @@ const ITEM_COLORS: Dictionary = {
 	ItemId.KEY: Color("#ffeb3b"),
 	ItemId.MONEY: Color("#43a047"),
 	ItemId.PASSPORT: Color("#1565c0"),
-	ItemId.MICROFILM: Color("#c62828"),
 }
 
 const ITEM_NAMES: Dictionary = {
@@ -40,40 +35,23 @@ const ITEM_NAMES: Dictionary = {
 	ItemId.KEY: "Llave",
 	ItemId.MONEY: "Dinero",
 	ItemId.PASSPORT: "Pasaporte",
-	ItemId.MICROFILM: "Microfilm",
 }
 
 const TRAP_COLORS: Dictionary = {
 	TrapId.BOMB: Color("#ff1744"),
-	TrapId.SPRING: Color("#eeeeee"),
-	TrapId.WATER_BUCKET: Color("#4fc3f7"),
-	TrapId.GUN_STRING: Color("#9e9e9e"),
-	TrapId.TIMED_BOMB: Color("#ff9100"),
 }
 
 const TRAP_NAMES: Dictionary = {
 	TrapId.BOMB: "Bomba",
-	TrapId.SPRING: "Resorte",
-	TrapId.WATER_BUCKET: "Cubo agua",
-	TrapId.GUN_STRING: "Pistola-cuerda",
-	TrapId.TIMED_BOMB: "Bomba temporizada",
 }
 
 # Etiquetas cortas para el placeholder en mano del jugador.
 const TRAP_HOLD_LABELS: Dictionary = {
 	TrapId.BOMB: "Bomba",
-	TrapId.SPRING: "Resorte",
-	TrapId.WATER_BUCKET: "Cubo",
-	TrapId.GUN_STRING: "P.cuerda",
-	TrapId.TIMED_BOMB: "T-Bomba",
 }
 
 const COUNTER_NAMES: Dictionary = {
 	CounterId.WIRE_CUTTERS: "Cortacables",
-	CounterId.WRENCH: "Llave inglesa",
-	CounterId.UMBRELLA: "Paraguas",
-	CounterId.TONGS: "Pinzas",
-	CounterId.GAS_MASK: "Mascara gas",
 }
 
 const FURNITURE_NAMES: Dictionary = {
@@ -101,8 +79,8 @@ const FURNITURE_COLORS: Dictionary = {
 }
 
 const SPY_COLORS: Dictionary = {
-	SpyId.PLAYER: Color("#f5f5f5"),
-	SpyId.AI: Color("#1a1a1a"),
+	SpyId.PLAYER1: Color("#f5f5f5"),
+	SpyId.PLAYER2: Color("#1a1a1a"),
 }
 
 const COLOR_FLOOR: Color = Color("#9a92ae")
@@ -128,7 +106,6 @@ func get_all_items() -> Array[int]:
 		ItemId.KEY,
 		ItemId.MONEY,
 		ItemId.PASSPORT,
-		ItemId.MICROFILM,
 	]
 	return arr
 
@@ -136,10 +113,6 @@ func get_all_items() -> Array[int]:
 func get_all_traps() -> Array[int]:
 	var arr: Array[int] = [
 		TrapId.BOMB,
-		TrapId.SPRING,
-		TrapId.WATER_BUCKET,
-		TrapId.GUN_STRING,
-		TrapId.TIMED_BOMB,
 	]
 	return arr
 
@@ -147,10 +120,6 @@ func get_all_traps() -> Array[int]:
 func get_all_counters() -> Array[int]:
 	var arr: Array[int] = [
 		CounterId.WIRE_CUTTERS,
-		CounterId.WRENCH,
-		CounterId.UMBRELLA,
-		CounterId.TONGS,
-		CounterId.GAS_MASK,
 	]
 	return arr
 

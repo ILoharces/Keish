@@ -10,7 +10,7 @@ func _ready() -> void:
 
 
 func get_aim_controller_spy_id() -> int:
-	return ItemDB.SpyId.AI
+	return ItemDB.SpyId.PLAYER2
 
 
 func _get_fire_action() -> String:

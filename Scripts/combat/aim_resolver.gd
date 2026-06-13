@@ -67,7 +67,7 @@ func resolve(screen_pos: Vector2, attacker: SpyBase) -> AimResult:
 	var in_bottom: bool = bottom_rect.has_point(screen_pos)
 	if not in_player and not in_bottom:
 		return result
-	var is_player_attacker: bool = attacker.spy_id == ItemDB.SpyId.PLAYER
+	var is_player_attacker: bool = attacker.spy_id == ItemDB.SpyId.PLAYER1
 	var own_rect: Rect2 = player_rect if is_player_attacker else bottom_rect
 	var opp_rect: Rect2 = bottom_rect if is_player_attacker else player_rect
 	var own_view: SubViewportContainer = _views.player_view if is_player_attacker else _views.ai_view

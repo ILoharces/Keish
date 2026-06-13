@@ -30,9 +30,9 @@ var _gamepad_device: int = 0
 func _init(p_spy_id: int, p_uses_mouse: bool) -> void:
 	spy_id = p_spy_id
 	uses_mouse = p_uses_mouse
-	var player_index: int = 0 if spy_id == ItemDB.SpyId.PLAYER else 1
+	var player_index: int = 0 if spy_id == ItemDB.SpyId.PLAYER1 else 1
 	aim_mode = GameSettings.get_gamepad_aim_mode(player_index) as AimMode
-	if spy_id == ItemDB.SpyId.PLAYER:
+	if spy_id == ItemDB.SpyId.PLAYER1:
 		_aim_left_action = "aim_left"
 		_aim_right_action = "aim_right"
 		_aim_up_action = "aim_up"
@@ -95,7 +95,7 @@ func update(
 	if clamped_pos != screen_pos:
 		screen_pos = clamped_pos
 		aim_changed.emit(screen_pos)
-	var player_index: int = 0 if spy_id == ItemDB.SpyId.PLAYER else 1
+	var player_index: int = 0 if spy_id == ItemDB.SpyId.PLAYER1 else 1
 	_gamepad_device = InputBindings.get_gamepad_device_for_player(player_index)
 	if uses_mouse and viewport != null:
 		var next_pos: Vector2 = _clamp_to_bounds(viewport.get_mouse_position(), bounds)
@@ -119,7 +119,7 @@ func _try_toggle_aim_mode(spy: SpyBase, resolver: AimResolver) -> void:
 		return
 	if not Input.is_action_just_pressed(_aim_mode_toggle_action):
 		return
-	var player_index: int = 0 if spy_id == ItemDB.SpyId.PLAYER else 1
+	var player_index: int = 0 if spy_id == ItemDB.SpyId.PLAYER1 else 1
 	if aim_mode == AimMode.VIRTUAL_CURSOR:
 		aim_mode = AimMode.ORBIT
 		_sync_orbit_dir_from_screen(spy, resolver)

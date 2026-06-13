@@ -75,7 +75,7 @@ func reset_match() -> void:
 	_cancel_all_respawns()
 	running = true
 	map_overlay_open = false
-	var spy_ids: Array[int] = [ItemDB.SpyId.PLAYER, ItemDB.SpyId.AI]
+	var spy_ids: Array[int] = [ItemDB.SpyId.PLAYER1, ItemDB.SpyId.PLAYER2]
 	var duration: float = match_config.match_duration
 	for spy_id: int in spy_ids:
 		time_left_by_spy[spy_id] = duration
@@ -137,7 +137,7 @@ func get_time_left(spy_id: int) -> float:
 func notify_spy_died(victim_id: int, killer_id: int, trap_id: int, weapon_id: StringName) -> void:
 	if not running:
 		return
-	if killer_id == ItemDB.SpyId.PLAYER or killer_id == ItemDB.SpyId.AI:
+	if killer_id == ItemDB.SpyId.PLAYER1 or killer_id == ItemDB.SpyId.PLAYER2:
 		consecutive_deaths_without_kill[killer_id] = 0
 	elimination_trap_id = trap_id
 	elimination_killer_id = killer_id

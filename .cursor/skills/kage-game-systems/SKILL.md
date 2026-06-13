@@ -71,7 +71,7 @@ Reglas de negocio: no dos jugadores en teclado; P2 teclado deshabilitado hasta t
 ### Ratón P1
 
 - `AimController.update()` sigue el ratón con clamp a `get_aim_views_global_rect()`.
-- Claves de `AimController`: P1 → `ItemDB.SpyId.PLAYER`, P2/vista negra → `ItemDB.SpyId.AI` (aunque el nodo sea `Player2`).
+- Claves de `AimController`: P1 → `ItemDB.SpyId.PLAYER1`, P2/vista negra → `ItemDB.SpyId.PLAYER2` (aunque el nodo sea `Player2`).
 
 ### Snap al equipar
 
