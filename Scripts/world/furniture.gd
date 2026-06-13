@@ -101,7 +101,7 @@ func _draw_hidden_weapon(_w: float, h: float, offset: Vector2) -> void:
 	draw_arc(center, 7.0, 0.0, TAU, 12, ItemDB.COLOR_OUTLINE, 1.5, false)
 
 
-func _draw_kind_label(w: float, h: float, offset: Vector2) -> void:
+func _draw_kind_label(_w: float, h: float, offset: Vector2) -> void:
 	var label: String = ItemDB.get_furniture_name(kind)
 	var font: Font = ThemeDB.fallback_font
 	var font_size: int = 11
@@ -159,35 +159,7 @@ func set_trap(new_trap_id: int, owner_spy_id: int) -> bool:
 	trapper_id = owner_spy_id
 	state = State.HAS_TRAP
 	lower_close()
-	if new_trap_id == ItemDB.TrapId.TIMED_BOMB:
-		_arm_timed_bomb()
 	return true
-
-
-func _arm_timed_bomb() -> void:
-	if timed_bomb_timer != null and is_instance_valid(timed_bomb_timer):
-		timed_bomb_timer.queue_free()
-	timed_bomb_timer = Timer.new()
-	timed_bomb_timer.wait_time = ItemDB.TIMED_BOMB_FUSE
-	timed_bomb_timer.one_shot = true
-	timed_bomb_timer.autostart = true
-	timed_bomb_timer.timeout.connect(_on_timed_bomb_fuse)
-	add_child(timed_bomb_timer)
-
-
-func _on_timed_bomb_fuse() -> void:
-	if state != State.HAS_TRAP or trap_id != ItemDB.TrapId.TIMED_BOMB:
-		return
-	var room: Room = owning_room
-	state = State.EMPTY
-	trap_id = -1
-	trapper_id = -1
-	if room == null:
-		return
-	for spy_node: Node in room.spies_inside:
-		var spy: SpyBase = spy_node as SpyBase
-		if spy != null:
-			spy.apply_trap_effect(ItemDB.TrapId.TIMED_BOMB, global_position)
 
 
 func interact(spy: SpyBase) -> Dictionary:

@@ -126,10 +126,6 @@ func apply_trap_effect(trap_id: int, effect_origin: Vector2 = Vector2.ZERO) -> v
 		return
 	host.stun_timer = STUN_DURATION
 	host.stunned_changed.emit(true)
-	if trap_id == ItemDB.TrapId.TIMED_BOMB:
-		var lost: int = GameState.remove_random_item(host.spy_id)
-		if lost != -1:
-			host.interaction.drop_item_in_room(lost)
 
 
 func _trigger_bomb_trap(effect_origin: Vector2) -> void:
