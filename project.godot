@@ -19,7 +19,6 @@ config/icon="res://icon.svg"
 
 ItemDB="*res://Scripts/autoload/item_db.gd"
 DisplayConfig="*res://Scripts/autoload/display_config.gd"
-DebugFlags="*res://Scripts/autoload/debug_flags.gd"
 GameState="*res://Scripts/autoload/game_state.gd"
 GameSettings="*res://Scripts/autoload/game_settings.gd"
 InputBindings="*res://Scripts/autoload/input_bindings.gd"
