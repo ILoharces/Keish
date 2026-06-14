@@ -29,7 +29,7 @@ func generate_grid(layout: LevelLayout) -> void:
 			room.spy_exited.connect(mansion._on_room_spy_exited.bind(room))
 
 
-func wire_passages(layout: LevelLayout) -> void:
+func wire_passages(_layout: LevelLayout) -> void:
 	for room: Room in mansion.rooms:
 		var gp: Vector2i = room.grid_pos
 		if room.has_door_n:
@@ -87,10 +87,8 @@ func mark_exit_door(layout: LevelLayout) -> void:
 
 
 func spawn_world_content() -> void:
-	if DebugFlags.is_furniture_enabled():
-		_spawn_furniture_and_items()
-	elif DebugFlags.scatter_items_when_no_furniture:
-		_scatter_items_on_floor()
+	_spawn_furniture_and_items()
+	_scatter_items_on_floor()
 
 
 func spawn_actors(layout: LevelLayout) -> void:
@@ -114,9 +112,8 @@ func spawn_actors(layout: LevelLayout) -> void:
 		mansion.add_child(mansion.ai_spy)
 		mansion.ai_spy.set_current_room(ai_room)
 		mansion.ai_spy.set_mansion(mansion)
-		if not DebugFlags.is_ai_active():
-			mansion.ai_spy.set_physics_process(false)
-			mansion.ai_spy.visible = false
+		mansion.ai_spy.set_physics_process(false)
+		mansion.ai_spy.visible = false
 	else:
 		mansion.player2 = Mansion.Player2Scene.instantiate() as Player2
 		mansion.player2.position = ai_room.get_center_world_pos()
