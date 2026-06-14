@@ -21,24 +21,10 @@ func interact_with_nearby() -> bool:
 		host.nearby_pickup = pickup
 		if _try_pickup_nearby_ground():
 			return true
-	if DebugFlags.is_furniture_enabled() and host.nearby_furniture != null:
-		var furn: Furniture = host.nearby_furniture
-		if furn.is_raised_open():
-			close_furniture(furn)
-			return true
-		close_open_furniture()
-		furn.raise_open(host)
-		host.open_furniture = furn
-		host.search_started.emit(furn)
-		_resolve_furniture_interaction(furn)
-		host.search_finished.emit(furn)
-		return true
 	return false
 
 
 func try_place_trap(trap_id: int) -> bool:
-	if not DebugFlags.is_furniture_enabled():
-		return false
 	if not host.is_alive or host.is_stunned() or host.is_searching():
 		return false
 	if not prepare_hands_for_trap(trap_id):

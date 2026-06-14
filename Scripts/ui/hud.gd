@@ -31,7 +31,6 @@ func _ready() -> void:
 	player_panel.update_inventory()
 	ai_panel.update_inventory()
 	relayout_for_display()
-	DebugFlags.apply_ui_visibility()
 
 
 func relayout_for_display() -> void:

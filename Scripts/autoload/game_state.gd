@@ -9,11 +9,9 @@ signal inventory_changed(spy_id: int)
 signal traps_changed(spy_id: int)
 signal game_over(winner_id: int)
 signal exit_reached(spy_id: int)
-signal item_blocked_no_suitcase(spy_id: int)
 signal suitcase_dropped(spy_id: int)
 signal suitcase_recovered(spy_id: int)
 signal suitcase_stolen(thief_id: int, victim_id: int)
-signal map_overlay_close_requested
 signal weapons_changed(spy_id: int)
 signal spy_died(victim_id: int, killer_id: int, trap_id: int)
 signal respawn_started(spy_id: int, duration: float)
@@ -100,8 +98,6 @@ func reset_match() -> void:
 func _process(delta: float) -> void:
 	if not running:
 		return
-	if DebugFlags.match_timer_enabled:
-		_tick_match_timers(delta)
 	_tick_respawns(delta)
 
 
@@ -509,10 +505,6 @@ func remove_item(spy_id: int, item_id: int) -> bool:
 func add_item(spy_id: int, item_id: int) -> bool:
 	var inv: Array = items_by_spy[spy_id] as Array
 	if inv.has(item_id):
-		return false
-	# Regla del maletin-first: sin maletin no entran otros items (salvo en debug).
-	if DebugFlags.require_suitcase_first and item_id != ItemDB.ItemId.SUITCASE and not has_suitcase(spy_id):
-		item_blocked_no_suitcase.emit(spy_id)
 		return false
 	inv.append(item_id)
 	inventory_changed.emit(spy_id)

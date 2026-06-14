@@ -63,7 +63,7 @@ func on_editor_closed() -> void:
 func set_game_ui_visible(visible_flag: bool) -> void:
 	main.game_root.visible = visible_flag
 	if main.hud != null:
-		main.hud.visible = visible_flag and DebugFlags.hud_enabled
+		main.hud.visible = visible_flag
 	if main.trapulator != null:
 		if not visible_flag:
 			main.trapulator.close()
@@ -93,7 +93,6 @@ func on_map_confirmed(layout: LevelLayout) -> void:
 	main.setup_combat_aim()
 	main._layout_helper.snap_cameras()
 	main.call_deferred("_refresh_viewport_layout")
-	DebugFlags.apply_ui_visibility()
 
 
 func bind_ui() -> void:
@@ -137,8 +136,6 @@ func update_player_input_block() -> void:
 
 
 func toggle_map_overlay() -> void:
-	if not DebugFlags.minimap_enabled:
-		return
 	main._map_open = not main._map_open
 	GameState.map_overlay_open = main._map_open
 	if main._map_overlay != null:

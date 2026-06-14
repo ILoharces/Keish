@@ -47,7 +47,7 @@ func _physics_process(delta: float) -> void:
 		input_vector = Vector2.ZERO
 		super._physics_process(delta)
 		return
-	if not DebugFlags.is_ai_active() or not GameState.running:
+	if not GameState.running:
 		input_vector = Vector2.ZERO
 		super._physics_process(delta)
 		return
@@ -76,16 +76,10 @@ func _choose_state() -> void:
 		ai_state = State.RETURN
 		target_room = mansion.get_exit_room()
 		return
-	if DebugFlags.is_furniture_enabled() and DebugFlags.ai_places_traps:
-		if place_trap_cooldown <= 0.0 and randf() < TRAP_PLACE_CHANCE and _has_trappable_target():
-			ai_state = State.PLACE_TRAP
-			return
 	if target_room == null or target_room == current_room:
-		if DebugFlags.is_furniture_enabled():
-			target_furniture = _pick_unvisited_furniture()
-			if target_furniture == null:
-				rooms_visited[current_room.get_instance_id()] = true
-				target_room = mansion.pick_next_search_room(self)
+		if target_furniture == null:
+			rooms_visited[current_room.get_instance_id()] = true
+			target_room = mansion.pick_next_search_room(self)
 		else:
 			rooms_visited[current_room.get_instance_id()] = true
 			target_room = mansion.pick_next_search_room(self)
@@ -103,12 +97,10 @@ func _execute_state() -> Vector2:
 
 
 func _search_step() -> Vector2:
-	if not DebugFlags.is_furniture_enabled():
-		if current_room == target_room or target_room == null:
-			rooms_visited[current_room.get_instance_id()] = true
-			target_room = mansion.pick_next_search_room(self)
-			return Vector2.ZERO
-		return _navigate_step()
+	if current_room == target_room or target_room == null:
+		rooms_visited[current_room.get_instance_id()] = true
+		target_room = mansion.pick_next_search_room(self)
+		return Vector2.ZERO
 	if current_room == target_room or target_room == null:
 		if target_furniture == null or not is_instance_valid(target_furniture) or visited_furniture.has(target_furniture.get_instance_id()):
 			target_furniture = _pick_unvisited_furniture()
